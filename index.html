@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web with grid</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@200;400&family=Poppins:wght@300;700&display=swap');
+
+        body {
+            background-color: #ddd;
+            font-size: 18px;
+            margin: 30px;
+            font-family: 'Oswald', sans-serif;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        img {
+            width: 100%;
+        }
+
+        .container {
+            display: grid;
+            gap: 10px;
+        }
+
+
+
+        /* header */
+        .header {
+            display: grid;
+            grid-template-areas: 
+                'hero hero feature-1'
+                'hero hero feature-2';
+        }
+
+        .hero {
+            grid-area: hero;
+            min-height: 300px;
+            background-image: url(img/peakpx.jpg);
+            background-size: cover;
+            background-position: center;
+            padding: 50px;
+            color: #b1461f;  
+        }
+
+        .hero .heading {
+            text-shadow: 3px -1px rgb(70, 58, 58);
+            font-size: 1.7em;
+        }
+
+        .hero > * {
+            display: none;
+            
+        }
+
+        .features {
+            background-color: black;
+            color: white;
+            display: grid;
+            place-content: center;
+            cursor: pointer;
+        }
+
+        .feature-1 {
+            grid-area: feature-1;
+            background-image: url(img/1.jpg);
+            background-position: center;
+            background-size: cover;
+        }
+
+        .feature-2 {
+            grid-area: feature-2;
+            background-image: url(img/2.jpg);
+            background-position: center;
+            background-size: cover;
+        }
+
+        .features .price {
+            font-size: 2em;
+            font-weight: 200;
+        }
+
+        /* nav */
+
+        .menu {
+            order: -1;
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            align-items: center;
+        }
+
+        .menu .brand {
+            font-size: 1.2em;
+        }
+
+        .menu ul {
+            list-style: none;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            gap: 5px; 
+        }
+
+        .menu a {
+            display: block;
+            text-decoration: none;
+            color: honeydew;
+            background-color: black;
+            text-align: center;
+            padding: 5px;
+            border-radius: 15px;
+            text-transform: uppercase;
+            font-size: .9em;
+        }
+
+
+
+
+        /* responsif */
+
+        @media screen and (max-width: 1024px) {
+            .menu {
+                order: inherit;
+                grid-template-columns: 1fr;
+            }
+
+            .menu .menu-toggle {
+                display: none;
+            }
+
+            .brand {
+                display: none;
+            }
+
+            .hero > * {
+                display: block;
+                width: 60%;
+                background-color: rgba(255,255,255, .5);
+                padding: 3px;
+                margin-bottom: 2px;
+            }
+
+            .hero {
+                display: flex;
+                flex-direction: column;
+                align-items: start;
+                justify-content: center;
+            }
+        }
+
+        @media screen and (max-width: 576px) {
+            .header {
+                grid-template-areas: 
+                    'hero'
+                    'feature-1'
+                    'feature-2';
+            }
+    
+            .menu {
+                order: -1;
+                justify-items: end;
+            }
+
+            .menu .menu-toggle {
+                display: inherit;
+            }
+
+            .menu ul {
+                position: absolute;
+                display: flex;
+                flex-direction: column;
+                background: rgb(8, 8, 8);
+                align-items: center;
+                justify-content: space-evenly;
+                font-weight: bold;
+                width: 100%;
+                top: 0px;
+                right: 0px;
+                height: 80vh;
+                transform: translateY(-300%);
+                transition: all .7s;
+            }
+
+            nav ul li a:hover,
+            nav ul li a.active {
+                background: none;
+                color: rgb(248, 246, 246);
+            }
+
+            .menu ul.slide {
+                transform: translateY(0);
+            }
+        }
+
+
+
+
+        /* hambuger menu */
+
+        .menu-toggle {
+            display: flex;
+            flex-direction: column;
+            height: 20px;
+            justify-content: space-evenly;
+            position: relative;
+            display: none;
+            z-index: 9999;
+        }
+
+        .menu-toggle input {
+            position: absolute; 
+            width: 50px;
+            height: 20px;
+            opacity: 0;
+            left: -12px;
+            cursor: pointer;
+            z-index: 9;
+        }
+
+        .menu-toggle span {
+            display: block;
+            width: 25px;
+            height: 3px;
+            background-color: rgb(6, 6, 6);
+            border-radius: 3px;
+            transition: all .3s;
+        }
+
+
+        /* hamburger menu animation */
+        .menu-toggle span:nth-child(2) {
+            transform-origin: 0 0;
+        }
+        .menu-toggle span:nth-child(2) {
+            transform-origin: 0 100%;
+        }
+
+        .menu-toggle input:checked ~ span:nth-child(2) {
+            transform: rotate(45deg) translate(-1px, 0px);
+            background-color: white;
+        }
+
+        .menu-toggle input:checked ~ span:nth-child(3) {
+            transform: scale(0);
+            background-color: white;
+        }
+
+        .menu-toggle input:checked ~ span:nth-child(4) {
+            transform: rotate(-45deg) translate(0, -5.5px);
+            background-color: white;
+        } 
+
+
+
+        /* Services */
+
+        .services {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 6px;
+            margin-top: 20px;
+        }
+
+        .service img {
+            width: 50px;
+            height: 50px;
+        }
+
+        .service {
+            background-color: rgb(226, 226, 226);
+            padding: 15px;
+            text-align: center;
+            border-radius: 10px;
+            box-shadow: 0 0 3px rgba(0,0,0, .5);
+        }
+
+        .service h3 {
+            font-size: 1.3em;
+            margin: 5px;
+        }
+
+        .service p {
+            font-size: .8em;
+        }
+
+
+        /* gallery */
+
+        .gallery {
+            margin-top: 50px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 5px;
+            justify-content: space-evenly;
+        }
+
+        .gallery h2 {
+            grid-column: 1/-1;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="hero">
+                <h2 class="heading">Main Title</h2>
+                <p class="sub-heading">Subtitle</p>
+            </div>
+            <div class="features feature-1">
+                <h4 class="price">Side-1</h4>
+                <p class="item">Lorem ipsum, dolor sit.</p>
+            </div>
+            <div class="features feature-2">
+                <h4 class="price">Side-2</h4>
+                <p class="item">lorem ipsum, dolor sit.</p>
+            </div>
+        </header>
+
+        <nav class="menu">
+            <div class="menu-toggle">
+                <input type="checkbox">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <div class="brand">
+                <h1>Merch Shop</h1>
+            </div>
+            <ul class="menu-list">
+                <li><a href="#Home">Home</a></li>
+                <li><a href="#Products">Products</a></li>
+                <li><a href="#About">About</a></li>
+                <li><a href="#Gallery">Gallery</a></li>
+            </ul>
+        </nav>
+    </div>
+
+    <section class="services">
+        <div class="service">
+            <div class="icon"><img src="img/laptop.png" alt=""></div>
+            <h3>Laptop</h3>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsum natus illo at ad deleniti officia perferendis voluptatibus, facilis repudiandae tenetur.</p>
+        </div>
+        <div class="service">
+            <div class="icon"><img src="img/finger.png" alt=""></div>
+            <h3>Fingerprint</h3>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsum natus illo at ad deleniti officia perferendis voluptatibus, facilis repudiandae tenetur.</p>
+        </div>
+        <div class="service">
+            <div class="icon"><img src="img/startup.png" alt=""></div>
+            <h3>Start-up</h3>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsum natus illo at ad deleniti officia perferendis voluptatibus, facilis repudiandae tenetur.</p>
+        </div>
+        <div class="service">
+            <div class="icon"><img src="img/wallet.png" alt=""></div>
+            <h3>Wallet</h3>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsum natus illo at ad deleniti officia perferendis voluptatibus, facilis repudiandae tenetur.</p>
+        </div>
+    </section>
+
+    <section class="gallery">
+        <h2>Gallery</h2>
+        <img src="https://source.unsplash.com/random/201x201" alt="">
+        <img src="https://source.unsplash.com/random/202x202" alt="">
+        <img src="https://source.unsplash.com/random/203x203" alt="">
+        <img src="https://source.unsplash.com/random/204x204" alt="">
+        <img src="https://source.unsplash.com/random/205x205" alt="">
+        <img src="https://source.unsplash.com/random/206x206" alt="">
+        <img src="https://source.unsplash.com/random/207x207" alt="">
+        <img src="https://source.unsplash.com/random/208x208" alt="">
+        <img src="https://source.unsplash.com/random/209x209" alt="">
+        <img src="https://source.unsplash.com/random/200x200" alt="">
+        
+    </section>
+
+
+    <script>
+
+        const menutoggle = document.querySelector('.menu-toggle input');
+        const nav = document.querySelector('nav ul');
+
+        menutoggle.addEventListener ('click', function() {
+            nav.classList.toggle('slide');
+        });
+
+    </script>
+
+</body>
+</html>
